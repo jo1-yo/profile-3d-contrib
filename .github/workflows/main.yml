@@ -1,23 +1,35 @@
 name: Generate 3D Contribution Graph
 
 on:
-  schedule: [{ cron: "0 0 * * *" }] # 每天凌晨更新一次
-  workflow_dispatch: # 允许手动触发
+  schedule:
+    - cron: "0 0 * * *"  # 每天凌晨运行一次
+  workflow_dispatch:  # 支持手动运行
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Generate 3D Contribution Graph
         uses: yoshi389111/github-profile-3d-contrib@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          username: jo1-yo
-          theme: night-rainbow
+          # 下面这两个是新语法
+          # ⚠️ 注意：新版的 action 参数名不再是 username/theme
+          user_name: jo1-yo
+          template: "night-rainbow"
+          output: "./profile-night-rainbow.svg"
+
       - name: Commit & Push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Generated 3D Contribution Graph"
+          file_pattern: "*.svg"

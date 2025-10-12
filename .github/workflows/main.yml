@@ -12,12 +12,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
       - name: Generate 3D Graph
         run: |
           git clone https://github.com/yoshi389111/github-profile-3d-contrib.git
           cd github-profile-3d-contrib
-          npm install
-          node ./src/index.js --username jo1-yo --theme github-dark --no-bg --no-legend --no-radar
+          npm ci
+          npx ts-node ./src/main.ts --username jo1-yo --theme github-dark --no-bg --no-legend --no-radar
           cd ..
           mkdir -p profile-3d-contrib
           mv github-profile-3d-contrib/out/github-dark.svg ./profile-3d-contrib/profile-night-rainbow.svg

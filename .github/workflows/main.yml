@@ -3,7 +3,7 @@ name: Generate 3D Contribution Graph
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"  # 每天自动生成一次
+    - cron: "0 0 * * *"  # 每天自动生成
 
 jobs:
   build:
@@ -11,13 +11,15 @@ jobs:
     name: Generate 3D Contribution Graph
     steps:
       - uses: actions/checkout@v3
-      - uses: yoshi389111/github-profile-3d-contrib@main
+      - uses: yoshi389111/github-profile-3d-contrib@v2.4.1
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}   # ✅ 修复身份验证问题
           user_name: jo1-yo
           output: ./profile-3d-contrib/profile-night-rainbow.svg
-          theme: 0x00ffff
-          transparent: true       #  背景透明
-          hide_legend: true        #  去掉右侧圆环
+          theme: rainbow
+          transparent: true
+          hide_legend: true
+          hide_radar: true
       - name: Commit & Push
         run: |
           git config user.name github-actions
@@ -25,4 +27,3 @@ jobs:
           git add .
           git commit -m "Generated 3D Contribution Graph"
           git push
-

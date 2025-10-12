@@ -3,7 +3,7 @@ name: Generate 3D Contribution Graph
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"  # 每天自动生成一次
+    - cron: "0 0 * * *"
 
 jobs:
   build:
@@ -11,16 +11,17 @@ jobs:
     name: Generate 3D Contribution Graph
     steps:
       - uses: actions/checkout@v3
+
       - name: Generate 3D Graph
-        uses: yoshi389111/github-profile-3d-contrib@main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          user_name: jo1-yo
-          output: ./profile-3d-contrib/profile-night-rainbow.svg
-          # ✅ 使用“透明主题”替代传统 theme
-          # （它实际上内置透明背景）
-          theme_name: github-light
+        run: |
+          git clone https://github.com/yoshi389111/github-profile-3d-contrib.git
+          cd github-profile-3d-contrib
+          npm install
+          npm run generate -- --username jo1-yo --theme github-dark --no-bg --no-legend --no-radar
+          cd ..
+          mkdir -p profile-3d-contrib
+          mv github-profile-3d-contrib/out/github-dark.svg ./profile-3d-contrib/profile-night-rainbow.svg
+
       - name: Commit & Push
         run: |
           git config user.name github-actions

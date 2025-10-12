@@ -1,35 +1,28 @@
-name: GitHub-Profile-3D-Contrib
+name: Generate 3D Contribution Graph
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"   # 每天凌晨自动生成
-  workflow_dispatch:        # 支持手动触发
-
-permissions:
-  contents: write
+    - cron: "0 0 * * *"  # 每天自动生成一次
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: generate-github-profile-3d-contrib
-
+    name: Generate 3D Contribution Graph
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Generate 3D Contribution Graph
-        uses: yoshi389111/github-profile-3d-contrib@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          USERNAME: jo1-yo
-          # 新增输出路径指定
-          OUTPUT_PATH: ./profile-3d-contrib/profile-night-rainbow.svg
-          THEME_NAME: "night-rainbow"
-
+      - uses: actions/checkout@v3
+      - uses: yoshi389111/github-profile-3d-contrib@main
+        with:
+          user_name: jo1-yo
+          output: ./profile-3d-contrib/profile-night-rainbow.svg
+          theme: 0x00ffff
+          transparent: true       #  背景透明
+          hide_legend: true        #  去掉右侧圆环
       - name: Commit & Push
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add profile-3d-contrib/profile-night-rainbow.svg || echo "no svg found"
-          git commit -m "Generated 3D Contribution Graph" || echo "nothing to commit"
+          git add .
+          git commit -m "Generated 3D Contribution Graph"
           git push
+

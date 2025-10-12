@@ -22,7 +22,7 @@ jobs:
           git clone https://github.com/yoshi389111/github-profile-3d-contrib.git
           cd github-profile-3d-contrib
           npm install
-          node bin/cli.js --username jo1-yo --theme github-dark --no-bg --no-legend --no-radar
+          node ./src/generate.mjs --username jo1-yo --theme github-dark --no-bg --no-legend --no-radar
           cd ..
           mkdir -p profile-3d-contrib
           mv github-profile-3d-contrib/out/github-dark.svg ./profile-3d-contrib/profile-night-rainbow.svg
@@ -34,3 +34,4 @@ jobs:
           git add .
           git commit -m "Generated 3D Contribution Graph"
           git push
+

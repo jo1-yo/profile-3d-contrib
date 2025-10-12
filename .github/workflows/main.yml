@@ -11,18 +11,16 @@ jobs:
     name: Generate 3D Contribution Graph
     steps:
       - uses: actions/checkout@v3
-
       - name: Generate 3D Graph
-        uses: hako-mikan/github-profile-3d-contrib@main
-        with:
+        uses: yoshi389111/github-profile-3d-contrib@main
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
           user_name: jo1-yo
           output: ./profile-3d-contrib/profile-night-rainbow.svg
-          theme: rainbow
-          transparent: true     # ✅ 背景透明
-          hide_legend: true      # ✅ 去掉圆环
-          hide_radar: true       # ✅ 去掉雷达
-
+          # ✅ 使用“透明主题”替代传统 theme
+          # （它实际上内置透明背景）
+          theme_name: github-light
       - name: Commit & Push
         run: |
           git config user.name github-actions

@@ -1,18 +1,23 @@
 name: Generate 3D Contribution Graph
 
 on:
-  schedule: [{ cron: "0 */12 * * *" }]
-  workflow_dispatch:
+  schedule: [{ cron: "0 0 * * *" }] # 每天凌晨更新一次
+  workflow_dispatch: # 允许手动触发
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
       - uses: actions/checkout@v3
-      - uses: yoshi389111/github-profile-3d-contrib@v2
+      - name: Generate 3D Contribution Graph
+        uses: yoshi389111/github-profile-3d-contrib@main
         with:
           username: jo1-yo
           theme: night-rainbow
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Commit & Push
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Generated 3D Contribution Graph"

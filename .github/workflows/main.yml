@@ -127,7 +127,7 @@ jobs:
               ]);
             }
 
-            return replaceAll(svg, [
+            svg = replaceAll(svg, [
               ['#89e051', '#78D8A1'],
               ['#e34c26', '#F47C6B'],
               ['#f1e05a', '#F4D35E'],
@@ -137,6 +137,10 @@ jobs:
               ['#6b7280', '#A6ADB8'],
               ['rgb(255,200,55)', 'rgb(244,180,73)'],
             ]);
+
+            return svg
+              .replace(/>other</g, '>Other: TS/MDX/Vue+<')
+              .replace(/<title>other ([^<]+)<\/title>/g, '<title>Other: TypeScript, MDX, Vue, Swift, Dockerfile ($1)</title>');
           }
 
           fs.writeFileSync('profile-3d-contrib/profile-rainbow-light.svg', buildVariant('light'));

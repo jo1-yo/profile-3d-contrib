@@ -46,6 +46,7 @@ jobs:
           perl -0pi -e 's/<rect stroke="none"/<rect stroke="#24162d" stroke-width="0.75"/g' profile-3d-contrib/profile-rainbow-dark.svg
           perl -0pi -e 's/fill="#eeeeff"/fill="#24292f"/g; s/fill="#aaaaaa"/fill="#57606a"/g; s/stroke: #aaaaaa/stroke: #8c959f/g; s/stroke="#00000f"/stroke="#f6f0fa"/g; s/fill="#444444"/fill="#8c959f"/g; s/style="fill: #444444;"/style="fill: #8c959f;"/g' profile-3d-contrib/profile-rainbow-light.svg
           perl -0pi -e 's/stroke="#00000f"/stroke="#111827"/g; s/fill="#444444"/fill="#6b7280"/g; s/style="fill: #444444;"/style="fill: #6b7280;"/g' profile-3d-contrib/profile-rainbow-dark.svg
+          perl -0pi -e 's/#89e051/#78D8A1/g; s/#e34c26/#F47C6B/g; s/#f1e05a/#F4D35E/g; s/#3572A5/#5B9BD5/g; s/#663399/#9B7AE5/g; s/fill="#8c959f"/fill="#A6ADB8"/g; s/style="fill: #8c959f;"/style="fill: #A6ADB8;"/g; s/fill="#6b7280"/fill="#A6ADB8"/g; s/style="fill: #6b7280;"/style="fill: #A6ADB8;"/g; s/rgb\(255,200,55\)/rgb(244,180,73)/g' profile-3d-contrib/profile-rainbow-light.svg profile-3d-contrib/profile-rainbow-dark.svg
       
       - name: Commit & Push
         run: |

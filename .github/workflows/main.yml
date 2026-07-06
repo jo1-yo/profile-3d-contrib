@@ -37,10 +37,15 @@ jobs:
 
       - name: Prepare theme-aware transparent variants
         run: |
-          cp profile-3d-contrib/profile-night-rainbow.svg profile-3d-contrib/profile-rainbow-dark.svg
           cp profile-3d-contrib/profile-night-rainbow.svg profile-3d-contrib/profile-rainbow-light.svg
+          cp profile-3d-contrib/profile-night-rainbow.svg profile-3d-contrib/profile-rainbow-dark.svg
           perl -0pi -e 's/<rect x="0" y="0" width="1280" height="850" fill="#00000f"><\/rect>//' profile-3d-contrib/profile-rainbow-dark.svg profile-3d-contrib/profile-rainbow-light.svg
-          perl -0pi -e 's/fill="#eeeeff"/fill="#24292f"/g; s/fill="#aaaaaa"/fill="#57606a"/g; s/stroke: #aaaaaa/stroke: #8c959f/g; s/stroke="#00000f"/stroke="#ffffff"/g; s/fill="#444444"/fill="#8c959f"/g' profile-3d-contrib/profile-rainbow-light.svg
+          perl -0pi -e 's/rgb\((\d+), (\d+), (\d+)\)/sprintf("rgb(%d, %d, %d)", int($1*0.62+255*0.38+0.5), int($2*0.62+255*0.38+0.5), int($3*0.62+255*0.38+0.5))/ge' profile-3d-contrib/profile-rainbow-light.svg
+          perl -0pi -e 's/rgb\((\d+), (\d+), (\d+)\)/sprintf("rgb(%d, %d, %d)", int($1*0.76+255*0.24+0.5), int($2*0.76+255*0.24+0.5), int($3*0.76+255*0.24+0.5))/ge' profile-3d-contrib/profile-rainbow-dark.svg
+          perl -0pi -e 's/<rect stroke="none"/<rect stroke="#eadff4" stroke-width="0.75"/g' profile-3d-contrib/profile-rainbow-light.svg
+          perl -0pi -e 's/<rect stroke="none"/<rect stroke="#24162d" stroke-width="0.75"/g' profile-3d-contrib/profile-rainbow-dark.svg
+          perl -0pi -e 's/fill="#eeeeff"/fill="#24292f"/g; s/fill="#aaaaaa"/fill="#57606a"/g; s/stroke: #aaaaaa/stroke: #8c959f/g; s/stroke="#00000f"/stroke="#f6f0fa"/g; s/fill="#444444"/fill="#8c959f"/g; s/style="fill: #444444;"/style="fill: #8c959f;"/g' profile-3d-contrib/profile-rainbow-light.svg
+          perl -0pi -e 's/stroke="#00000f"/stroke="#111827"/g; s/fill="#444444"/fill="#6b7280"/g; s/style="fill: #444444;"/style="fill: #6b7280;"/g' profile-3d-contrib/profile-rainbow-dark.svg
       
       - name: Commit & Push
         run: |

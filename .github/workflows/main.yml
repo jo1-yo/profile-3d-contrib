@@ -34,6 +34,13 @@ jobs:
               "contribColors": ["#004400", "#006600", "#008800", "#00aa00", "#00ff00"],
               "username": "jo1-yo"
             }
+
+      - name: Prepare theme-aware transparent variants
+        run: |
+          cp profile-3d-contrib/profile-night-rainbow.svg profile-3d-contrib/profile-rainbow-dark.svg
+          cp profile-3d-contrib/profile-night-rainbow.svg profile-3d-contrib/profile-rainbow-light.svg
+          perl -0pi -e 's/<rect x="0" y="0" width="1280" height="850" fill="#00000f"><\/rect>//' profile-3d-contrib/profile-rainbow-dark.svg profile-3d-contrib/profile-rainbow-light.svg
+          perl -0pi -e 's/fill="#eeeeff"/fill="#24292f"/g; s/fill="#aaaaaa"/fill="#57606a"/g; s/stroke: #aaaaaa/stroke: #8c959f/g; s/stroke="#00000f"/stroke="#ffffff"/g; s/fill="#444444"/fill="#8c959f"/g' profile-3d-contrib/profile-rainbow-light.svg
       
       - name: Commit & Push
         run: |
